@@ -1,0 +1,106 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Challenge Java - Empresas y Transferencias
+  description: API para gestionar adhesiones de empresas y consultar transferencias recientes.
+  contact:
+    name: Tu Nombre
+host: localhost:8080
+basePath: /api
+schemes:
+  - http
+paths:
+  /empresas/transferencias-recientes:
+    get:
+      tags:
+        - Empresas
+      summary: Obtener empresas que hicieron transferencias en el último mes
+      operationId: getEmpresasConTransferenciasRecientes
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Lista de empresas
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Empresa'
+
+  /empresas/adhesiones-recientes:
+    get:
+      tags:
+        - Empresas
+      summary: Obtener empresas que se adhirieron en el último mes
+      operationId: getEmpresasAdheridasRecientemente
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Lista de empresas
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Empresa'
+
+  /empresas/adhesion:
+    post:
+      tags:
+        - Empresas
+      summary: Registrar una nueva adhesión de empresa
+      operationId: registrarAdhesionEmpresa
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: empresa
+          required: true
+          schema:
+            $ref: '#/definitions/Empresa'
+      responses:
+        '201':
+          description: Empresa adherida exitosamente
+        '400':
+          description: Datos inválidos
+
+definitions:
+  Empresa:
+    type: object
+    required:
+      - cuit
+      - razonSocial
+      - fechaAdhesion
+    properties:
+      cuit:
+        type: string
+        example: '30-12345678-9'
+      razonSocial:
+        type: string
+        example: 'Financiera XYZ S.A.'
+      fechaAdhesion:
+        type: string
+        format: date
+        example: '2025-04-01'
+  Transferencia:
+    type: object
+    required:
+      - importe
+      - idEmpresa
+      - cuentaDebito
+      - cuentaCredito
+    properties:
+      importe:
+        type: number
+        format: double
+        example: 15000.50
+      idEmpresa:
+        type: string
+        example: 'empresa_123'
+      cuentaDebito:
+        type: string
+        example: '001234567890'
+      cuentaCredito:
+        type: string
+        example: '009876543210'
+

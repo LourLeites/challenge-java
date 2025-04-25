@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <include resource="paas/ardx/commons/logging/logback-spring.xml" />
+    <turboFilter class="ch.qos.logback.classic.turbo.MDCFilter">
+        <MDCKey>http_request_path</MDCKey>
+        <Value>/liveness</Value>
+        <OnMismatch>NEUTRAL</OnMismatch>
+        <OnMatch>DENY</OnMatch>
+    </turboFilter>
+    <turboFilter class="ch.qos.logback.classic.turbo.MDCFilter">
+        <MDCKey>http_request_path</MDCKey>
+        <Value>/readiness</Value>
+        <OnMismatch>NEUTRAL</OnMismatch>
+        <OnMatch>DENY</OnMatch>
+    </turboFilter>
+</configuration>
